@@ -31,11 +31,9 @@ class Solution {
                prevOp = c;
                num = 0;
             }
-
             if (c == ')') {
                 break; 
             }
-
             idx++;
         }
 
