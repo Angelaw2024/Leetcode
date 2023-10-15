@@ -9,47 +9,46 @@
  */
 class Solution {
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
-        // trun into a graph
-        Map<TreeNode, List<TreeNode>> graph = new HashMap<>();
-        helper(graph, root);
-
-        List<Integer> result = new ArrayList<>();
-        Queue<TreeNode> q= new LinkedList<>();
-        q.offer(target);
-        Set<TreeNode> visited = new HashSet<>();
-        int dist = 0;
-        while (!q.isEmpty()) {
-            int size = q.size();
-            while (size-- > 0) {
-                TreeNode cur = q.poll();
-                if (dist == k) {
-                    result.add(cur.val);
-                }
-                visited.add(cur);
-                for(TreeNode node: graph.get(cur)) {
-                    if (!visited.contains(node)) {
-                        q.offer(node);
-                    }
-                }
-            }
-            dist++;
-        }
-        return result;
+        List<Integer> res = new ArrayList<>();
+        getNodes(root, target, k, res);
+        return res;
     }
-    private void helper(Map<TreeNode, List<TreeNode>> graph, TreeNode node) {
-        if (node == null) return;
-        graph.putIfAbsent(node, new ArrayList<>());
-        if (node.left != null) {
-            graph.putIfAbsent(node.left, new ArrayList<>());
-            graph.get(node).add(node.left);
-            graph.get(node.left).add(node);
-            helper(graph, node.left);
+
+    public int getNodes(TreeNode root, TreeNode target, int k, List<Integer> res){
+        if(root == null){
+            return -1;
         }
-        if (node.right != null) {
-            graph.putIfAbsent(node.right, new ArrayList<>());
-            graph.get(node).add(node.right);
-            graph.get(node.right).add(node);
-            helper(graph, node.right);
+        if(root == target){
+            getSub(root, 0, k, res);
+            return 1;
+        }else{
+            int left = getNodes(root.left, target, k, res);
+            int right = getNodes(root.right, target, k, res);
+
+            if(left == k || right == k){
+                res.add(root.val);
+                return -1;
+            }else if(left != -1){
+                getSub(root.right, left + 1, k, res);
+                return left + 1;
+            }else if(right != -1){
+                getSub(root.left, right + 1, k, res);
+                return right + 1;
+            }else{
+                return -1;
+            }
         }
+    }
+
+    public void getSub(TreeNode root, int cur, int k, List<Integer> res){
+        if(root == null){
+            return;
+        }
+        if(k == cur){
+            res.add(root.val);
+            return;
+        }
+        getSub(root.left, cur + 1, k, res);
+        getSub(root.right, cur + 1, k, res);
     }
 }
