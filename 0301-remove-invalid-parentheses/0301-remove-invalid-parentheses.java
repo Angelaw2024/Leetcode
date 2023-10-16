@@ -41,8 +41,9 @@ class Solution {
             for (char c : s.toCharArray()) {
                 if (c == '(') {
                     ct++;
-                } else if (c == ')' && --ct < 0){
-                    return false;
+                } else if (c == ')') {
+                    if (ct == 0) return false;
+                    ct--;
                 }
             }
             return ct == 0;
