@@ -16,17 +16,17 @@
 class Solution {
     int sum = 0;
     public int sumNumbers(TreeNode root) {
-        helper(root, 0);
+        dfs(root, 0);
         return sum;
     }
-    public void helper(TreeNode node, int value) {
+    public void dfs(TreeNode node, int value) {
         if (node == null) return;
         value  = value * 10 + node.val;
         if (node.left == null && node.right == null) {
             sum += value;
             return;
         }
-        helper(node.left, value);
-        helper(node.right, value); 
+        dfs(node.left, value);
+        dfs(node.right, value); 
     }
 }
