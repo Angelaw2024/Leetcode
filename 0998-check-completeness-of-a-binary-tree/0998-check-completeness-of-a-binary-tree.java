@@ -21,21 +21,14 @@ class Solution {
         queue.add(root);
         boolean noRight = false;
         while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int i = 0; i < queue.size(); i++) {
-                TreeNode cur = queue.poll();
-                if (cur.left != null) {
-                    queue.add(cur.left);
-                    if (noRight) return false;
-                } else if (cur.left == null) {
-                    noRight = true;
-                }
-                if (cur.right != null) {
-                    queue.add(cur.right);
-                    if (noRight) return false;
-                } else if (cur.right == null) {
-                    noRight = true;
-                }
+            TreeNode cur = queue.poll();
+            if (cur == null){
+                noRight = true;
+            } else if (noRight) {
+                return false;
+            } else {
+                queue.offer(cur.left);
+                queue.offer(cur.right);
             }
         }
         return true;
