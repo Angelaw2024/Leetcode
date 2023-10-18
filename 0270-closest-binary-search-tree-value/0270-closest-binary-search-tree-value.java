@@ -15,14 +15,14 @@
  */
 class Solution {
     public int closestValue(TreeNode root, double target) {
-        int val, closest = root.val;
+        int closet = root.val;
         while (root != null) {
-            val = root.val;
-            closest = Math.abs(val - target) < Math.abs(closest - target) 
-                || (Math.abs(val - target) == Math.abs(closest - target) 
-                && val < closest) ? val : closest;
-            root =  target < root.val ? root.left : root.right;
+            double diff = Math.abs(root.val - target) - Math.abs(closet - target);
+            if (diff < 0 || diff == 0 && root.val < closet) closet = root.val;
+                
+            
+            root = target > root.val ? root.right : root.left;
         }
-        return closest;
-    }
+        return closet;
+    } 
 }
