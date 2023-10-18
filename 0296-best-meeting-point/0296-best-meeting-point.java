@@ -43,11 +43,10 @@ class Solution {
                 }
             }
         }
-        // int row = rows.get(rows.size() / 2);
-        // int col = cols.get(cols.size() / 2);
         int result = minDistance1D(rows) + minDistance1D(cols);
         return result;
     }
+    // 依次取两边最远的距离
     private int minDistance1D(List<Integer> points) {
         int distance = 0;
         int i = 0;
@@ -58,5 +57,38 @@ class Solution {
             j--;
         }
         return distance;
+    }
+}
+
+class Solution2 {
+    public int minTotalDistance(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        int[] r = new int[m], c = new int[n];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                r[i] += grid[i][j];
+                c[j] += grid[i][j];
+            }
+        }
+        
+        return getMinDis(r) + getMinDis(c);
+    }
+
+    private int getMinDis(int[] arr) {
+        int i = -1, j = arr.length;
+        int dis = 0, left = 0, right = 0;
+
+        while (i < j) {
+            if (left < right) {
+                dis += left;
+                left += arr[++i];
+            } else {
+                dis += right;
+                right += arr[--j];
+            }
+        }
+
+        return dis;
     }
 }
