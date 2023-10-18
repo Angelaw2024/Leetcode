@@ -18,7 +18,13 @@ class Solution {
         int closet = root.val;
         while (root != null) {
             double diff = Math.abs(root.val - target) - Math.abs(closet - target);
-            if (diff < 0 || diff == 0 && root.val < closet) closet = root.val;
+            if (diff < 0) {
+                closet = root.val;
+            }
+            else if (diff == 0 && root.val < closet) {
+                closet = root.val;
+            }
+            
             root = target > root.val ? root.right : root.left;
         }
         return closet;
