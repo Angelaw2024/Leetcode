@@ -48,5 +48,4 @@ class Solution {
             robot.turnRight();
         }
     }
-
 }
