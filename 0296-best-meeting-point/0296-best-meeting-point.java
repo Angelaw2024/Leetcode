@@ -43,16 +43,20 @@ class Solution {
                 }
             }
         }
-        int row = rows.get(rows.size() / 2);
-        int col = cols.get(cols.size() / 2);
-        int result = Distance1D(rows, row) + Distance1D(cols, col);
+        // int row = rows.get(rows.size() / 2);
+        // int col = cols.get(cols.size() / 2);
+        int result = minDistance1D(rows) + minDistance1D(cols);
         return result;
     }
-    public int Distance1D(List<Integer> positions, int target) {
-        int sum = 0;
-        for (Integer position : positions ) {
-            sum += Math.abs(target - position);
+    private int minDistance1D(List<Integer> points) {
+        int distance = 0;
+        int i = 0;
+        int j = points.size() - 1;
+        while (i < j) {
+            distance += points.get(j) - points.get(i);
+            i++;
+            j--;
         }
-        return sum;
+        return distance;
     }
 }
