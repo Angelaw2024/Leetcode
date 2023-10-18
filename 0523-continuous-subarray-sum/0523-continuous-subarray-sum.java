@@ -1,14 +1,14 @@
 class Solution {
     /**
     This helped me visualize the ans. In the example:
-[23,2,6,4,7] k =12
+    [23,2,6,4,7] k =12
 
-(23)%12 = 11
-(23+2)%12=1
-(23+2+6)%12 = 7
-(23+2+6+4)%12=11 -> seen before, so return true because:
+    (23)%12 = 11
+    (23+2)%12=1
+    (23+2+6)%12 = 7
+    (23+2+6+4)%12=11 -> seen before, so return true because:
 
-(23+2+6+4) - (23) = 12 -> 12 % 12 = 0
+    (23+2+6+4) - (23) = 12 -> 12 % 12 = 0
  */
     public boolean checkSubarraySum(int[] nums, int k) {
         if (nums.length <= 1) return false;
