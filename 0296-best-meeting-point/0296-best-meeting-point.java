@@ -43,7 +43,6 @@ class Solution {
                 }
             }
         }
-        Collections.sort(cols);
         int row = rows.get(rows.size() / 2);
         int col = cols.get(cols.size() / 2);
         int result = Distance1D(rows, row) + Distance1D(cols, col);
