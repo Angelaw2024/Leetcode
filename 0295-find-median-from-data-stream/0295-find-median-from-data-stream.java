@@ -19,7 +19,7 @@ class MedianFinder {
             return 0;
         }
         if (small.size() == large.size()) {
-            return (double)(small.peek() + large.peek()) / 2.0;
+            return (small.peek() + large.peek()) / 2.0;
         } else {
             return small.peek();
         }
