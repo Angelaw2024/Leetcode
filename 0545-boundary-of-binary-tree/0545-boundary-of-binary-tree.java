@@ -14,6 +14,7 @@
  * }
  */
 class Solution {
+    // pre order(L boundary) + post order (R boundary)
     public List<Integer> boundaryOfBinaryTree(TreeNode root) {
         if (root == null) return new ArrayList<>();
         List<Integer> res = new ArrayList<>();
@@ -29,11 +30,19 @@ class Solution {
             res.add(node.val);
             return;
         }
+        // preOrder for L
         if (isLBound) {
             res.add(node.val);
         }
+        // If a node in the left boundary and has a left child, then the left child is in the left boundary
+        // isLBound && node.left != null :
+        // If a node is in the left boundary, has no left child, but has a right child, 
+        // then the right child is in the left boundary.
+        // isLBound && node.left == null
         getBounds(node.left, res, isLBound && node.left != null, isRBound && node.right == null);
         getBounds(node.right, res, isLBound && node.left == null, isRBound && node.right != null);
+
+        // postOrder for R
         if(isRBound) {
             res.add(node.val);
         }
