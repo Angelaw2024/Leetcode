@@ -23,7 +23,6 @@ class MedianFinder {
         } else {
             return small.peek();
         }
-
     }
 }
 
