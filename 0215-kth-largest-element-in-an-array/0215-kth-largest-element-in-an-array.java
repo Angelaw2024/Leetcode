@@ -17,6 +17,23 @@ class Solution {
         return nums[left];
     }
     private int partition(int[] nums, int lo, int hi) {
+        int i = lo, j = hi + 1;
+        int pivotNum = nums[lo];
+        while (i < j) {
+            while (nums[++i] < pivotNum) {
+                if (i >= hi) break;
+            }
+            while (nums[--j] > pivotNum) {
+                if (j <= lo) break;
+            }
+            if (i >= j) break;
+            swap(nums, i, j);
+        }
+        swap(nums, j, lo);
+        return j;
+    }
+
+    private int partition2(int[] nums, int lo, int hi) {
         int i = lo + 1, j = hi;
         int pivotNum = nums[lo];
         while (true) {
@@ -36,7 +53,6 @@ class Solution {
         swap(nums, j, lo);
         return j;
     }
-
     private void swap(int[] nums, int i, int j) {
         int t = nums[i];
         nums[i] = nums[j];
