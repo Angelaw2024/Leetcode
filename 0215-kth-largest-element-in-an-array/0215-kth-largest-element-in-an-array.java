@@ -17,17 +17,21 @@ class Solution {
         return nums[left];
     }
     private int partition(int[] nums, int lo, int hi) {
-        int i = lo, j = hi + 1;
+        int i = lo + 1, j = hi;
         int pivotNum = nums[lo];
-        while (i < j) {
-            while (nums[++i] < pivotNum) {
+        while (true) {
+            while (nums[i] < pivotNum) {
                 if (i >= hi) break;
+                i++;
             }
-            while (nums[--j] > pivotNum) {
+            while (nums[j] > pivotNum) {
                 if (j <= lo) break;
+                j--;
             }
             if (i >= j) break;
             swap(nums, i, j);
+            i++;
+            j--;
         }
         swap(nums, j, lo);
         return j;
