@@ -7,11 +7,7 @@ class Solution {
                 count[c - 'a']++;
             }
             String key = String.valueOf(count);
-            if (!map.containsKey(key)) {
-                
-                map.put(key, new ArrayList<String>());
-            }
-            map.get(key).add(s);
+            map.computeIfAbsent(key, k -> new ArrayList<>()).add(s);
         }
         return new ArrayList(map.values());
     }
