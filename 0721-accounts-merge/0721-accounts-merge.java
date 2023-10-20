@@ -50,3 +50,56 @@ class Solution {
         return child;
     }
 }
+
+class Solution1 {
+    public List<List<String>> accountsMerge(List<List<String>> accounts) {
+        Map<String, String> emailToName = new HashMap<>();
+        Map<String, Integer> emailToId = new HashMap<>();
+        // initial union find
+        int[] parents = new int[10000];
+        for (int i = 0; i < parents.length; i++) {
+            parents[i] = i;
+        }
+
+        int id = 0;
+        for (List<String> account: accounts) {
+            String name = "";
+            for (String email: account) {
+                if (name == "") {
+                    name = email;
+                    continue;
+                }
+                emailToName.put(email, name);
+                if (!emailToId.containsKey(email)) {
+                    emailToId.put(email, id);
+                    id++;
+                }
+                int root1 = findParent(parents, emailToId.get(account.get(1)));
+                int root2 = findParent(parents, emailToId.get(email));
+                parents[root1] = root2;
+            }
+        }
+
+        Map<Integer, List<String>> users = new HashMap<>();
+        for (String email : emailToName.keySet()) {
+            int index = findParent(parents, emailToId.get(email));
+            users.computeIfAbsent(index, x -> new ArrayList<>()).add(email);
+        }
+
+        List<List<String>> res = new ArrayList<>();
+        for (List<String> emails : users.values()) {
+            Collections.sort(emails); // Sort emails alphabetically
+            String name = emailToName.get(emails.get(0));
+            emails.add(0, name);
+            res.add(emails);
+        }
+        return res;
+    }
+    private int findParent(int[] parents, int child) {
+        while (child != parents[child]) {
+            parents[child] = parents[parents[child]];
+            child = parents[child];
+        }
+        return child;
+    }
+}
