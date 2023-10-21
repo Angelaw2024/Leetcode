@@ -6,6 +6,7 @@ class Solution {
             maxLoad = Math.max(maxLoad, weight);
         }
         int l = maxLoad, r = totalLoad;
+
         while (l < r) {
             int mid = l + (r - l) / 2;
             int shipDays = getShipDays(weights, mid);
