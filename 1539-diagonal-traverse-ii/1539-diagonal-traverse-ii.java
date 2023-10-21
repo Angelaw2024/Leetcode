@@ -6,14 +6,14 @@ class Solution {
             for (int j = 0; j < nums.get(i).size(); j++) {
                 count++;
                 int idx = i + j;
-                map.computeIfAbsent(idx, k -> new ArrayList<>()).add(0, nums.get(i).get(j));
+                map.computeIfAbsent(idx, k -> new ArrayList<>()).add(nums.get(i).get(j));
             }
         }
         int[] res = new int[count];
         int n = 0;
         for (int i = 0; i < map.keySet().size(); i++) {
             List<Integer> list = map.get(i);
-            for (int j = 0; j < list.size(); j++) {
+            for (int j = list.size() - 1; j >= 0; j--) {
                 res[n++] = list.get(j);
             }
         }
