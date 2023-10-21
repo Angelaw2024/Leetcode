@@ -23,13 +23,9 @@ class Solution {
     }
     public void helper(TreeNode node, int max, int min) {
         if (node == null) return;
-        if (node.val > max) {
-            max = node.val;
-        }
-        if (node.val < min) {
-            min = node.val;
-        }
-        res = Math.max(max - min, res);
+        max = Math.max(max, node.val);
+        min = Math.min(min, node.val);
+        res = Math.max(Math.abs(max - min), res);
         helper(node.left, max, min);
         helper(node.right, max, min);
     }
