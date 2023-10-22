@@ -29,7 +29,6 @@ public class Solution {
         for (int i = 0; i < nums.length; i++) {
             count = count + (nums[i] == 0 ? -1 : 1);
             if (arr[count + nums.length] >= -1) {
-                System.out.println("first: "+ (count + nums.length));
                 maxlen = Math.max(maxlen, i - arr[count + nums.length]);
             } else {
 
