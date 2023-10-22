@@ -31,7 +31,6 @@ public class Solution {
             if (arr[count + nums.length] >= -1) {
                 maxlen = Math.max(maxlen, i - arr[count + nums.length]);
             } else {
-
                 arr[count + nums.length] = i;
             }
         }
