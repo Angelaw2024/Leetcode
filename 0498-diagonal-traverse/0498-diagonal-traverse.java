@@ -11,7 +11,7 @@ class Solution {
         for(int i=0, row=0, col=0; i < nItems; i++) {
             result[i] = mat[row][col];
             if(up){
-                if(col == colMax){ // Check this condition first before the other else-if condition otherwise you'll get ArrayOutOfBoundsException
+                if(col == colMax){
                     row++;
                     up=false;
                 } else if (row == 0){
