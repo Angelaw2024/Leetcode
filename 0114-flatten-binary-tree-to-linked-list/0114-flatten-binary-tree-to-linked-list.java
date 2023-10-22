@@ -14,7 +14,7 @@
  * }
  */
 class Solution {
-    public void flatten(TreeNode root) {
+    public void flatten1(TreeNode root) {
         if (root == null) return;
 
         TreeNode node = root;
@@ -30,5 +30,24 @@ class Solution {
             }
             node = node.right;
         }
+    }
+
+    public void flatten(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        if (root.left != null) {
+            flatten(root.left);
+        }
+        if (root.right != null) {
+            flatten(root.right);
+        }
+        TreeNode right = root.right;
+        root.right = root.left;
+        root.left = null;
+        while (root.right != null) {
+            root = root.right;
+        }
+        root.right = right;
     }
 }
