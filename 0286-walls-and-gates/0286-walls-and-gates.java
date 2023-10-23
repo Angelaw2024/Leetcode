@@ -1,3 +1,4 @@
+/* BFS time: O(mn) space: O(mn)*/
 class Solution {
     int[][] dir = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
     public void wallsAndGates(int[][] rooms) {
@@ -32,27 +33,27 @@ class Solution {
     }
 }
 
-/* O(m^2 n ^2) */
-// class Solution {
-//     int inf = Integer.MAX_VALUE;
-//     public void wallsAndGates(int[][] rooms) {
-//         for (int i = 0; i < rooms.length; i++) {
-//             for (int j = 0; j < rooms[0].length; j++) { //O(mn) 
-//                 if (rooms[i][j] == 0) {
-//                     dfs(rooms, i, j, 0);
-//                 } 
-//             }
-//         }
-//     }
-//     // 时间：O(mn) 空间：O(mn)
-//     public void dfs(int[][] rooms, int x, int y, int dist) { 
-//         if (x < 0 || x >= rooms.length || y < 0 || y >= rooms[0].length || rooms[x][y] < dist) {
-//             return;
-//         }
-//         rooms[x][y] = dist++;
-//         dfs(rooms, x + 1, y, dist);
-//         dfs(rooms, x - 1, y, dist);
-//         dfs(rooms, x, y + 1, dist);
-//         dfs(rooms, x, y - 1, dist);
-//     }
-// }
+/* DFS time: O(m^2 n ^2) space: O(mn)*/
+class Solution1 {
+    int inf = Integer.MAX_VALUE;
+    public void wallsAndGates(int[][] rooms) {
+        for (int i = 0; i < rooms.length; i++) {
+            for (int j = 0; j < rooms[0].length; j++) { //O(mn) 
+                if (rooms[i][j] == 0) {
+                    dfs(rooms, i, j, 0);
+                } 
+            }
+        }
+    }
+    // 时间：O(mn) 空间：O(mn)
+    public void dfs(int[][] rooms, int x, int y, int dist) { 
+        if (x < 0 || x >= rooms.length || y < 0 || y >= rooms[0].length || rooms[x][y] < dist) {
+            return;
+        }
+        rooms[x][y] = dist++;
+        dfs(rooms, x + 1, y, dist);
+        dfs(rooms, x - 1, y, dist);
+        dfs(rooms, x, y + 1, dist);
+        dfs(rooms, x, y - 1, dist);
+    }
+}
