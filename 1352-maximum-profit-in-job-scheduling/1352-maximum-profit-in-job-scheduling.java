@@ -28,6 +28,7 @@ class Solution {
     }
 }
 
+// O(nlogn) O(n)
 class Solution1 {
     // 最大工作数为50000
     int[] memo = new int[50001];
