@@ -12,7 +12,18 @@ class Solution {
                 if (stack.isEmpty() || stack.peek() < 0) {
                     stack.push(ast);
                 } else if (stack.peek() == -ast) {
+                    
                     stack.pop();
+                // follow up 如果改变方向
+                //    int count = 0;
+                //    while(!stack.isEmpty() && stack.peek() == -ast) {
+                //        stack.pop();
+                //        count++;
+                //    }
+                //    stack.push(ast);
+                //    while(count-- > 0) {
+                //        stack.push(-ast);
+                //    }
                 }
             }
         }
