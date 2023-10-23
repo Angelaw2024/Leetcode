@@ -1,3 +1,4 @@
+// O(n) O(h) 递归高度
 class Solution {
     int idx = 0;
     public int calculate(String s) {
@@ -13,7 +14,7 @@ class Solution {
             } else if (c == '(') {
                 idx++; 
                 num = calculate(s); 
-            }
+            } 
             if (c == '+' || c == '-' || c == '*' || c == '/' || idx == s.length() - 1 || c == ')') {
                 if (prevOp == '+'){
                     cur += num;
@@ -27,12 +28,12 @@ class Solution {
                if (c == '+' || c == '-' || c == ')' || idx == s.length() - 1) {
                    result += cur;
                    cur = 0;
+                   if (c == ')') {
+                        break;
+                    }
                }
                prevOp = c;
                num = 0;
-            }
-            if (c == ')') {
-                break; 
             }
             idx++;
         }
