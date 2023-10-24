@@ -20,7 +20,7 @@ class Solution {
         char tmp = numStr.charAt(i);
         numStr.setCharAt(i, numStr.charAt(j));
         numStr.setCharAt(j, tmp);
-System.out.print(numStr.toString());
+
         // 3. Reverse the substring to the right of the swapped digit
         numStr.replace(i + 1, len, new StringBuilder(numStr.substring(i + 1)).reverse().toString());
 
