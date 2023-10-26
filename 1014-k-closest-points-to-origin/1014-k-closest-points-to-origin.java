@@ -1,32 +1,35 @@
 class Solution {
     public int[][] kClosest(int[][] points, int k) {
-        int l = 0, r = points.length - 1;
-        while (l <= r) {
-            int pivotIdx = partition(points, l, r);
-            if (pivotIdx == k - 1) {
-                break;
-            }
-            if (pivotIdx < k - 1) {
-                l = pivotIdx + 1;
+        int left = 0, right = points.length - 1;
+        int target = k;
+
+        while (left < right) {
+            int pivotIdx = partition(points, left, right);
+            if (pivotIdx == target) break;
+            if (pivotIdx < target) { 
+                left = pivotIdx + 1;
             } else {
-                r = pivotIdx - 1;
+                right = pivotIdx - 1;
             }
         }
-        return Arrays.copyOfRange(points, 0, k);
+        return Arrays.copyOf(points, k);
     }
-    
     public int partition(int[][] points, int lo, int hi) {
+        int i = lo, j = hi + 1;
         int[] pivot = points[lo];
         int pivotDist = dist(pivot);
-        int l = lo + 1, r = hi;
         while (true) {
-            while (l < hi && dist(points[l]) < pivotDist) l++;
-            while (r > lo && dist(points[r]) >= pivotDist) r--;
-            if (l >= r) break;
-            swap(points, l, r);
+            while (dist(points[++i]) < pivotDist) {
+                if (i == hi) break;
+            }
+            while (dist(points[--j]) > pivotDist) {
+                if (j == lo) break;
+            }
+            if (i >= j) break;
+            swap(points, i, j);
         }
-        swap(points, lo, r);
-        return r;
+        swap(points, j, lo);
+        return j;
     }
 
     public int dist(int[] point) {
