@@ -1,43 +1,41 @@
 class Solution {
     public int[][] kClosest(int[][] points, int k) {
-        int n = points.length;
-        int[] dists = new int[n];
-        for (int i = 0; i < n; i++) {
-            dists[i] = dist(points[i]);
-        }
-        Arrays.sort(dists);
-        int limit = dists[k - 1];
-        int[][] ans = new int[k][2];
-        int j = 0;
-        for (int i = 0; i < n; i++) {
-            if (dist(points[i]) <= limit) {
-                ans[j++] = points[i];
+        int l = 0, r = points.length - 1;
+        while (l <= r) {
+            int pivotIdx = partition(points, l, r);
+            if (pivotIdx == k - 1) {
+                break;
+            }
+            if (pivotIdx < k - 1) {
+                l = pivotIdx + 1;
+            } else {
+                r = pivotIdx - 1;
             }
         }
-        return ans;
+        return Arrays.copyOfRange(points, 0, k);
     }
-    private int dist(int[] point) {
-        return point[0] * point[0] + point[1] * point[1];
+    
+    public int partition(int[][] points, int lo, int hi) {
+        int[] pivot = points[lo];
+        int pivotDist = dist(pivot);
+        int l = lo + 1, r = hi;
+        while (true) {
+            while (l < hi && dist(points[l]) < pivotDist) l++;
+            while (r > lo && dist(points[r]) >= pivotDist) r--;
+            if (l >= r) break;
+            swap(points, l, r);
+        }
+        swap(points, lo, r);
+        return r;
     }
-}
 
-// 小小clean up
-class Solution1 {
-    public int[][] kClosest(int[][] points, int k) {
-        int n = points.length;
-        int[][] dists = new int[n][3];
-        for (int i = 0; i < n; i++) {
-            dists[i] = new int[]{dist(points[i]), points[i][0], points[i][1]};
-        }
-        Arrays.sort(dists, (a, b) -> (a[0] - b[0]));
-        int[][] ans = new int[k][2];
-        for (int i = 0; i < k; i++) {
-            ans[i][0] = dists[i][1];
-            ans[i][1] = dists[i][2];
-        }
-        return ans;
-    }
-    private int dist(int[] point) {
+    public int dist(int[] point) {
         return point[0] * point[0] + point[1] * point[1];
+    }
+    
+    public void swap(int[][] points, int idx1, int idx2) {
+        int[] tmp = points[idx1];
+        points[idx1] = points[idx2];
+        points[idx2] = tmp;
     }
 }
