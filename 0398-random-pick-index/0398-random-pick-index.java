@@ -7,18 +7,16 @@ class Solution {
     }
     
     public int pick(int target) {
-        int res = -1;
-        int targetIdxs = 0;
-        for (int i = 0; i < this.nums.length; i++) {
-            if (this.nums[i] != target) {
-                continue;
-            }
-            int pick = rand.nextInt(1 + targetIdxs++);
+        int result = -1;
+        int targetIdx = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != target) continue;
+            int pick = rand.nextInt(1 + targetIdx++);
             if (pick == 0) {
-                res = i;
+                result = i;
             }
         }
-        return res;
+        return result;
     }
 }
 
