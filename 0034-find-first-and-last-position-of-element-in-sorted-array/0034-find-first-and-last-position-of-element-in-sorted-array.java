@@ -31,31 +31,31 @@ class Solution {
     }
 }
 
-// class Solution1 {
-//     public int[] searchRange(int[] nums, int target) {
-//         if (nums.length == 0) return new int[]{-1, -1};
+class Solution1 {
+    public int[] searchRange(int[] nums, int target) {
+        if (nums.length == 0) return new int[]{-1, -1};
 
-//         int first = findFirst(nums, target);
-//         int last = findFirst(nums, target + 1);
-//         int[] res = new int[]{-1, -1};
-//         if (nums[first] != target) return res;
-//         res[0] = first;
-//         res[1] = nums[last] == target ? last : last - 1;
-//         return res;
-//     }
+        int first = findFirst(nums, target);
+        int last = findFirst(nums, target + 1);
+        int[] res = new int[]{-1, -1};
+        if (nums[first] != target) return res;
+        res[0] = first;
+        res[1] = nums[last] == target ? last : last - 1;
+        return res;
+    }
 
-//     private int findFirst(int[] nums, int target) {
-//         int n = nums.length;
-//         int left = 0;
-//         int right = n - 1;
-//         while (left < right) {
-//             int mid = left + (right - left) / 2;
-//             if (nums[mid] < target) {
-//                 left = mid + 1;
-//             } else {
-//                 right = mid;
-//             }
-//         }
-//         return left;
-//     }
-// }
+    private int findFirst(int[] nums, int target) {
+        int n = nums.length;
+        int left = 0;
+        int right = n - 1;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
+}
