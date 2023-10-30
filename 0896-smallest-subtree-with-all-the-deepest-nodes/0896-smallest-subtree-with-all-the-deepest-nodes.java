@@ -13,40 +13,35 @@
  *     }
  * }
  */
-public class Solution {
-    // 主函数
-    public TreeNode subtreeWithAllDeepest(TreeNode root) {
-        if (root == null) return root;
-        // 调用 depth 函数并返回包含所有最深节点的最小子树的根。
-        return depth(root).getValue();
+class Solution {
+    // 主要的函数，用于找到包含所有最深节点的最小子树的根。
+    public TreeNode subtreeWithAllDeepest(TreeNode node) {
+        // 如果是空节点，直接返回
+        if(node == null) return node;
+
+        // 找到左子树的深度
+        int l = findDepth(node.left);
+
+        // 找到右子树的深度
+        int r = findDepth(node.right);
+
+        // 比较左右子树的深度
+        if(l < r) {
+            // 如果右子树更深，递归进入右子树
+            return subtreeWithAllDeepest(node.right);
+        } else if(l > r) {
+            // 如果左子树更深，递归进入左子树
+            return subtreeWithAllDeepest(node.left);
+        }
+
+        // 如果左右子树的深度相同，返回当前节点
+        return node;
     }
 
-    // 辅助函数，返回一个 Pair 对象，包含深度和最小子树的根。
-    private Pair<Integer, TreeNode> depth(TreeNode node) {
-        // 如果节点是叶子节点，返回深度 0 和当前节点。
-        if (node.left == null && node.right == null) {
-            return new Pair<>(0, node);
-        }
-
-        // 如果左孩子存在，递归地找出左子树的深度和最小子树的根。
-        // 否则，返回深度为 -1 和 null。
-        Pair<Integer, TreeNode> left = node.left != null ? depth(node.left) : new Pair<>(-1, null);
-
-        // 如果右孩子存在，递归地找出右子树的深度和最小子树的根。
-        // 否则，返回深度为 -1 和 null。
-        Pair<Integer, TreeNode> right = node.right != null ? depth(node.right) : new Pair<>(-1, null);
-
-        // 如果左右子树的深度相同，则当前节点就是包含所有最深节点的最小子树的根。
-        if (left.getKey() == right.getKey()) {
-            return new Pair<>(left.getKey() + 1, node);
-        }
-
-        // 如果左子树比右子树更深，返回左子树的深度和最小子树的根。
-        if (left.getKey() > right.getKey()) {
-            return new Pair<>(left.getKey() + 1, left.getValue());
-        } else {
-            // 如果右子树比左子树更深，返回右子树的深度和最小子树的根。
-            return new Pair<>(right.getKey() + 1, right.getValue());
-        }
+    // 缺少的辅助函数，用于计算一个节点的最大深度。
+    // 这个函数在上面的代码中并没有给出，但它是必要的。
+    public int findDepth(TreeNode node) {
+        if(node == null) return 0;
+        return 1 + Math.max(findDepth(node.left), findDepth(node.right));
     }
 }
