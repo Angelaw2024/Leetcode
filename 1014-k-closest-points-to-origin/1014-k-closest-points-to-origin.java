@@ -1,44 +1,43 @@
 class Solution {
     public int[][] kClosest(int[][] points, int k) {
-        int left = 0, right = points.length - 1;
-        int target = k;
-
-        while (left < right) {
-            int pivotIdx = partition(points, left, right);
-            if (pivotIdx == target) break;
-            if (pivotIdx < target) { 
-                left = pivotIdx + 1;
+        int l = 0, r = points.length - 1;
+        while (l < r) {
+            int pivotIdx = partition(points, l, r);
+            if (pivotIdx == k) break;
+            if (pivotIdx < k) {
+                l = pivotIdx + 1;
             } else {
-                right = pivotIdx - 1;
+                r = pivotIdx - 1;
             }
         }
         return Arrays.copyOf(points, k);
     }
-    public int partition(int[][] points, int lo, int hi) {
-        int i = lo, j = hi + 1;
-        int[] pivot = points[lo];
+
+    public int partition(int[][] points, int start, int end) {
+        int[] pivot = points[start];
         int pivotDist = dist(pivot);
+        int l = start, r = end + 1;
         while (true) {
-            while (dist(points[++i]) < pivotDist) {
-                if (i == hi) break;
+            while (dist(points[++l]) < pivotDist) {
+                if (l == end) break;
             }
-            while (dist(points[--j]) > pivotDist) {
-                if (j == lo) break;
+            while (dist(points[--r]) > pivotDist) {
+                if (r == start) break;
             }
-            if (i >= j) break;
-            swap(points, i, j);
+            if (l >= r) break;
+            swap(points, l, r);
         }
-        swap(points, j, lo);
-        return j;
+        swap(points, start, r);
+        return r;
     }
 
     public int dist(int[] point) {
         return point[0] * point[0] + point[1] * point[1];
     }
-    
+
     public void swap(int[][] points, int idx1, int idx2) {
-        int[] tmp = points[idx1];
+        int[] point = points[idx1];
         points[idx1] = points[idx2];
-        points[idx2] = tmp;
+        points[idx2] = point;
     }
 }
