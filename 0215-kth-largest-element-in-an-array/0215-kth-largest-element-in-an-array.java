@@ -1,3 +1,4 @@
+// ave O(n) worst O(n^2)  space O(1)
 class Solution {
     public int findKthLargest(int[] nums, int k) {
         int left = 0, right = nums.length - 1;
