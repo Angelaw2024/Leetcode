@@ -13,6 +13,7 @@
  *     }
  * }
  */
+ // O(n) O(n)
 class Solution {
     public List<List<Integer>> verticalOrder(TreeNode root) {
         if (root == null) return new ArrayList<>();

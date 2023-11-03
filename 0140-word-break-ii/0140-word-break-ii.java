@@ -1,57 +1,43 @@
 class Solution {
     List<String> res;
-
-    public List<String> wordBreak(String s, List<String> wordDictList) {
+    public List<String> wordBreak(String s, List<String> wordDict) {
         res = new ArrayList<>();
-        Set<String> wordDict = new HashSet(wordDictList);
-        List<String>[] dp = new ArrayList[s.length() + 1];
-        dp[0] = new ArrayList<>();
-        int maxLen = getMaxLen(wordDict);
+        Set<String> dict = new HashSet(wordDict);
+        Map<Integer, List<String>> map = new HashMap<>();
+        map.put(0, new ArrayList<>());
 
-        // 预处理 加快 backtracking
+        int maxLength = 0;
+        for (String word: wordDict) {
+            maxLength = Math.max(word.length(), maxLength);
+        }
+
         for (int i = 1; i <= s.length(); i++) {
-            for (int j = i - 1; j >= i - maxLen && j >= 0; j--) {
-                if (dp[j] == null) continue; // only search from the index of last letter of word
+            for (int j = i - 1; j >= i - maxLength && j >= 0; j--) {
+                if(!map.containsKey(j)) continue;
                 String word = s.substring(j, i);
-                if (wordDict.contains(word)) {
-                    if (dp[i] == null) {
-                        dp[i] = new ArrayList<>();
-                    }
-                    dp[i].add(word);
+                if (dict.contains(word)) {
+                    map.computeIfAbsent(i, k -> new ArrayList<>()).add(word);
                 }
             }
         }
+        if (!map.containsKey(s.length()))  return res;
 
-        if (dp[s.length()] == null) {
-            return res;
-        }
-
-        dfs(dp, s.length(), new ArrayList<>());
+        dfs(map, s.length(), new ArrayList());
         return res;
     }
 
-    private void dfs(List<String>[] dp, int end, List<String> temp) {
+    public void dfs(Map<Integer, List<String>> map, int end, List<String> cur) {
         if (end <= 0) {
-            StringBuilder path = new StringBuilder();
-            for (int i = temp.size() - 1; i >= 0; i--) {
-                path.append(" ").append(temp.get(i));
+            StringBuilder sb = new StringBuilder();
+            for (int i = cur.size() - 1; i >= 0; i--) {
+                sb.append(" ").append(cur.get(i));
             }
-            res.add(path.toString().trim());
-            return;
+            res.add(sb.toString().trim());
         }
-        for (String word : dp[end]) {
-            temp.add(word);
-            dfs(dp, end - word.length(), temp);
-            temp.remove(temp.size() - 1);
+        for (String word: map.get(end)) {
+            cur.add(word);
+            dfs(map, end - word.length(), cur);
+            cur.remove(cur.size() - 1);
         }
     }
-
-    private int getMaxLen(Set<String> wordDict) {
-        int res = 0;
-        for (String w : wordDict) {
-            res = Math.max(res, w.length());
-        }
-        return res;
-    }
-    
 }
