@@ -4,36 +4,36 @@ class Solution {
         int count = 0;
 
         Comparator<Integer> comparator = (a, b) -> nums[a] == nums[b] ? a - b : Integer.compare(nums[a], nums[b]);
-        TreeSet<Integer> left = new TreeSet<>(comparator);
-        TreeSet<Integer> right = new TreeSet<>(comparator);
+        TreeSet<Integer> small = new TreeSet<>(comparator);
+        TreeSet<Integer> large = new TreeSet<>(comparator);
 
         for (int i = 0; i < nums.length; i++) {
-            right.add(i);
-            balance(left, right);
+            large.add(i);
+            balance(small, large);
             
             if (i >= k - 1) {
                 if (i >= k) {
-                    if (!left.remove(i - k)) {
-                        right.remove(i - k);
+                    if (!small.remove(i - k)) {
+                        large.remove(i - k);
                     }
-                    balance(left, right);
+                    balance(small, large);
                 }
                 if (k % 2 == 0) {
-                    res[count++] = ((double) nums[left.last()] + nums[right.first()]) / 2;
+                    res[count++] = ((double) nums[small.last()] + nums[large.first()]) / 2;
                 } else {
-                    res[count++] = (double) nums[left.last()];
+                    res[count++] = (double) nums[small.last()];
                 }
             }
         }
         return res;
     }
 // Method to balance left and right TreeSets
-        public void balance(TreeSet<Integer> left, TreeSet<Integer> right ) {
-            while (left.size() <= right.size()) {
-                left.add(right.pollFirst());
+        public void balance(TreeSet<Integer> small, TreeSet<Integer> large ) {
+            while (small.size() <= large.size()) {
+                small.add(large.pollFirst());
             }
-            while (left.size() > right.size() + 1) {
-                right.add(left.pollLast());
+            while (small.size() > large.size() + 1) {
+                large.add(small.pollLast());
             }
         }
 }
